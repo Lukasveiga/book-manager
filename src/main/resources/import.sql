@@ -1,0 +1,1 @@
+INSERT INTO tb_book(name, pages, book_year) VALUES ('Java Efetivo', 432, 2019);

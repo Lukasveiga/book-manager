@@ -22,19 +22,22 @@ public class BookDTO {
 
     private int pages;
 
-    private List<String> authors;
+    private List<String> authors = new ArrayList<>();
 
     public BookDTO(Book book) {
         this.name = book.getName();
         this.year = book.getYear();
         this.pages = book.getPages();
-
-        if (authors == null) {
-            authors = new ArrayList<>();
-        }
-
         this.authors.addAll(book.getAuthors()
                                     .stream()
                                     .map(Author::getName).toList());
+    }
+
+    public Book transformToObject() {
+        return new Book(
+                this.name,
+                this.year,
+                this.pages
+        );
     }
 }

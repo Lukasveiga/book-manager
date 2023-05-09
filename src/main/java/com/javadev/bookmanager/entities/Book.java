@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class Book {
     @JoinTable(name = "book_author",
     joinColumns = @JoinColumn(name = "id_book"),
     inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private List<Author> authors;
+    private List<Author> authors = new ArrayList<>();
 
     // private double price;
 
@@ -42,6 +43,15 @@ public class Book {
 
     // private boolean isAvailable;
 
+    public Book(String name, int year, int pages) {
+        this.name = name;
+        this.year = year;
+        this.pages = pages;
+    }
+
+    public void addAuthor(Author author) {
+        authors.add(author);
+    }
 
     @Override
     public boolean equals(Object o) {

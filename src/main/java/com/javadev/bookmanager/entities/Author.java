@@ -34,6 +34,10 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "id_book"))
     private List<Book> books;
 
+    public Author(String name, String about) {
+        this.name = name;
+        this.about = about;
+    }
 
     @Override
     public boolean equals(Object o) {

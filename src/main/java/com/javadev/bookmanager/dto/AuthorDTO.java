@@ -20,17 +20,20 @@ public class AuthorDTO {
 
     private String about;
 
-    private List<String> books;
+    private List<String> books = new ArrayList<>();
 
     public AuthorDTO(Author author) {
         this.name = author.getName();
         this.about = author.getAbout();
 
-        if (this.books == null) {
-            this.books = new ArrayList<>();
-        }
-
         this.books.addAll(
                 author.getBooks().stream().map(Book::getName).toList());
+    }
+
+    public Author transformToObject() {
+        return new Author(
+                this.name,
+                this.about
+        );
     }
 }

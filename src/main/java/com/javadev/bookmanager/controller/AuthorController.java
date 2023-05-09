@@ -3,10 +3,9 @@ package com.javadev.bookmanager.controller;
 import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +19,10 @@ public class AuthorController {
     @GetMapping
     public ResponseEntity<List<AuthorDTO>> findAll() {
         return ResponseEntity.ok(service.listAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO authorDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(authorDTO));
     }
 }

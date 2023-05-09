@@ -29,6 +29,9 @@ public class Author {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "book_author",
+            joinColumns = @JoinColumn(name = "id_author"),
+            inverseJoinColumns = @JoinColumn(name = "id_book"))
     private List<Book> books;
 
 

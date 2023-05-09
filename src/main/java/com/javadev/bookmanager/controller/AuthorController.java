@@ -1,6 +1,7 @@
 package com.javadev.bookmanager.controller;
 
 import com.javadev.bookmanager.dto.AuthorDTO;
+import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,11 @@ public class AuthorController {
     @GetMapping
     public ResponseEntity<List<AuthorDTO>> findAll() {
         return ResponseEntity.ok(service.listAll());
+    }
+
+    @GetMapping("/all-books/{author}")
+    public ResponseEntity<List<BookDTO>> findAllBooksByAuthor(@PathVariable String author) {
+        return ResponseEntity.ok(service.listAllBooksByAuthor(author));
     }
 
     @PostMapping

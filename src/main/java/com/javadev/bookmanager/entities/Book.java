@@ -37,9 +37,9 @@ public class Book {
     inverseJoinColumns = @JoinColumn(name = "id_author"))
     private List<Author> authors = new ArrayList<>();
 
-    // private double price;
-
     // private List<Category> categories;
+
+    // private double price;
 
     // private boolean isAvailable;
 

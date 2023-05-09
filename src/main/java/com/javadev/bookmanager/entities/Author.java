@@ -14,8 +14,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_book")
-public class Book {
+@Table(name = "tb_author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,31 +24,20 @@ public class Book {
 
     private String name;
 
-    @Column(name = "book_year")
-    private int year;
-
-    private int pages;
+    @Column(columnDefinition = "TEXT")
+    private String about;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name = "book_author",
-    joinColumns = @JoinColumn(name = "id_book"),
-    inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private List<Author> authors;
-
-    // private double price;
-
-    // private List<Category> categories;
-
-    // private boolean isAvailable;
+    private List<Book> books;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
-        Book book = (Book) o;
-        return Objects.equals(id, book.id);
+        Author author = (Author) o;
+        return Objects.equals(id, author.id);
     }
 
     @Override

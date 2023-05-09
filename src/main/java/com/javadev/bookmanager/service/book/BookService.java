@@ -1,4 +1,4 @@
-package com.javadev.bookmanager.service;
+package com.javadev.bookmanager.service.book;
 
 import com.javadev.bookmanager.dto.BookDTO;
 

@@ -1,11 +1,10 @@
-package com.javadev.bookmanager.service;
+package com.javadev.bookmanager.service.book;
 
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class AuthorDTO {
 
     private String about;
 
-    private List<String> books = new ArrayList<>();
+    private Set<String> books = new HashSet<>();
 
     public AuthorDTO(Author author) {
         this.name = author.getName();

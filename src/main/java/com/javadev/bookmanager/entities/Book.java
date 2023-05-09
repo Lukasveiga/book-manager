@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -35,7 +33,7 @@ public class Book {
     @JoinTable(name = "book_author",
     joinColumns = @JoinColumn(name = "id_book"),
     inverseJoinColumns = @JoinColumn(name = "id_author"))
-    private List<Author> authors = new ArrayList<>();
+    private Set<Author> authors = new HashSet<>();
 
     // private List<Category> categories;
 
@@ -58,11 +56,11 @@ public class Book {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
         Book book = (Book) o;
-        return Objects.equals(id, book.id);
+        return Objects.equals(name, book.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 }

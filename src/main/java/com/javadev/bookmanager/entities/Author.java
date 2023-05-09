@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class Author {
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_book"))
-    private List<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public Author(String name, String about) {
         this.name = name;
@@ -44,11 +45,11 @@ public class Author {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
         Author author = (Author) o;
-        return Objects.equals(id, author.id);
+        return Objects.equals(name, author.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 }

@@ -17,26 +17,26 @@ public class ExceptionHandlerSource {
     @ExceptionHandler(AuthorNotFoundException.class)
     public ResponseEntity<ExceptionDetails> authorNotFound(AuthorNotFoundException ex, HttpServletRequest request) {
 
-        ExceptionDetails exceptionDetails = new ExceptionDetails(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value(),
-                LocalDateTime.now()
-        );
-
-        return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(
+                ExceptionDetails
+                        .builder()
+                        .path(request.getRequestURI())
+                        .message(ex.getMessage())
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .localDateTime(LocalDateTime.now())
+                        .build(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ExceptionDetails> bookNotFound(BookNotFoundException ex, HttpServletRequest request) {
 
-        ExceptionDetails exceptionDetails = new ExceptionDetails(
-                request.getRequestURI(),
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value(),
-                LocalDateTime.now()
-        );
-
-        return new ResponseEntity<>(exceptionDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(
+                ExceptionDetails
+                        .builder()
+                        .path(request.getRequestURI())
+                        .message(ex.getMessage())
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .localDateTime(LocalDateTime.now())
+                        .build(), HttpStatus.NOT_FOUND);
     }
 }

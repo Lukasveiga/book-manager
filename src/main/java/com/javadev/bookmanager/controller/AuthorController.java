@@ -22,7 +22,7 @@ public class AuthorController {
         return ResponseEntity.ok(service.listAll());
     }
 
-    @GetMapping("/all-books/{author}")
+    @GetMapping("/{author}/books")
     public ResponseEntity<List<BookDTO>> findAllBooksByAuthor(@PathVariable String author) {
         return ResponseEntity.ok(service.listAllBooksByAuthor(author));
     }

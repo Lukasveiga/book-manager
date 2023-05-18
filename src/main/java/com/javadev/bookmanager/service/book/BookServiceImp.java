@@ -3,7 +3,6 @@ package com.javadev.bookmanager.service.book;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
-import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.service.author.AuthorService;
@@ -27,8 +26,8 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public List<Book> findByName(String name) {
-        return repository.findByNameIgnoreCase(name);
+    public Book findByName(String name) {
+        return repository.findByNameIgnoreCase(name).orElseThrow(() -> new BookNotFoundException("The book {" + name + "} wasn't found."));
     }
 
     @Override
@@ -39,17 +38,8 @@ public class BookServiceImp implements BookService{
 
     @Override
     public BookDTO insertAuthor(String bookName, String authorName) {
-        List<Author> authorList = authorService.findByName(authorName);
-        List<Book> bookList = findByName(bookName);
-
-        if (authorList.isEmpty()) {
-            throw new AuthorNotFoundException(authorName + " wasn't found.");
-        } else if (bookList.isEmpty()) {
-            throw new BookNotFoundException(bookName + " wasn't found.");
-        }
-
-        Author author = authorList.get(0);
-        Book book = bookList.get(0);
+        Author author = authorService.findByName(authorName);
+        Book book = findByName(bookName);
 
         book.addAuthor(author);
         repository.save(book);

@@ -14,5 +14,5 @@ public interface AuthorService {
 
     AuthorDTO save(AuthorDTO authorDTO);
 
-    List<Author> findByName(String name);
+    Author findByName(String name);
 }

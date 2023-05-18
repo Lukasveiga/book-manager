@@ -3,6 +3,7 @@ package com.javadev.bookmanager.service.author;
 import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
+import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     public List<BookDTO> listAllBooksByAuthor(String authorName) {
-        Author author = repository.findByNameIgnoreCase(authorName).get(0);
-        return author.getBooks().stream().map(BookDTO::new).toList();
+        return findByName(authorName)
+                .getBooks()
+                .stream().map(BookDTO::new).toList();
     }
 
     @Override
@@ -34,7 +36,8 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
-    public List<Author> findByName(String name) {
-        return repository.findByNameIgnoreCase(name);
+    public Author findByName(String name) {
+        return repository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
     }
 }

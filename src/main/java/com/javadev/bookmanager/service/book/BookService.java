@@ -13,5 +13,5 @@ public interface BookService {
 
     BookDTO insertAuthor(String bookName, String authorName);
 
-    List<Book> findByName(String name);
+    Book findByName(String name);
 }

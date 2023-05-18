@@ -14,9 +14,9 @@ public interface BookService {
 
     BookDTO insertAuthor(String bookName, String authorName);
 
-    Book findByName(String name);
+    BookDTO findByName(String name);
 
-    public Book findById(Long id);
+    public BookDTO findById(Long id);
 
     void delete(Long id);
 }

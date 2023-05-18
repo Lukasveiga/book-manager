@@ -59,9 +59,9 @@ class AuthorServiceImpTest {
         when(repository.findByNameIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(authorTest));
 
-        Author author = service.findByName(authorTest.getName());
-        assertThat(author).isNotNull();
-        assertThat(author).usingRecursiveComparison().isEqualTo(authorTest);
+        AuthorDTO authorDTO = service.findByName(authorTest.getName());
+        assertThat(authorDTO).isNotNull();
+        assertThat(authorDTO).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
     }
 
     @Test

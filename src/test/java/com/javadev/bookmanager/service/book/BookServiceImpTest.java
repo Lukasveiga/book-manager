@@ -1,5 +1,6 @@
 package com.javadev.bookmanager.service.book;
 
+import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
@@ -61,9 +62,9 @@ class BookServiceImpTest {
         when(repository.findByNameIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
-        Book book = service.findByName(bookTest.getName());
+        BookDTO book = service.findByName(bookTest.getName());
         assertThat(book).isNotNull();
-        assertThat(book).usingRecursiveComparison().isEqualTo(bookTest);
+        assertThat(book).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
 
     @Test
@@ -91,7 +92,7 @@ class BookServiceImpTest {
                 .thenReturn(Optional.ofNullable(bookTest));
 
         when(authorService.findByName(any(String.class)))
-                .thenReturn(authorTest);
+                .thenReturn(new AuthorDTO(authorTest));
 
         BookDTO bookDTO = service.insertAuthor(bookTest.getName(), authorTest.getName());
         assertThat(bookDTO).isNotNull();

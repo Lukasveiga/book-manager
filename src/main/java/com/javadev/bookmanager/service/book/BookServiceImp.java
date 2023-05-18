@@ -27,23 +27,25 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public Book findById(Long id) {
-        return repository.findById(id)
+    public BookDTO findById(Long id) {
+        return repository.findById(id).map(BookDTO::new)
                 .orElseThrow(
                         () -> new BookNotFoundException("The book with id {" + id + "} wasn't found.")
                 );
     }
 
     @Override
-    public Book findByName(String name) {
-        return repository.findByNameIgnoreCase(name).orElseThrow(() -> new BookNotFoundException("The book {" + name + "} wasn't found."));
+    public BookDTO findByName(String name) {
+        return repository.findByNameIgnoreCase(name).map(BookDTO::new)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + name + "} wasn't found."));
     }
 
     @Override
     @Transactional
     public BookDTO insertAuthor(String bookName, String authorName) {
-        Author author = authorService.findByName(authorName);
-        Book book = findByName(bookName);
+        Author author = authorService.findByName(authorName).transformToObject();
+        Book book = repository.findByNameIgnoreCase(bookName)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
 
         book.addAuthor(author);
         repository.save(book);
@@ -61,7 +63,9 @@ public class BookServiceImp implements BookService{
     @Override
     @Transactional
     public void delete(Long id) {
-        repository.delete(findById(id));
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
+        repository.delete(book);
     }
 
 }

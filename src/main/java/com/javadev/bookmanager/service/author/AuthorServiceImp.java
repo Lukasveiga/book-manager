@@ -23,21 +23,22 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
-    public Author findById(Long id) {
-        return repository.findById(id).orElseThrow(
+    public AuthorDTO findById(Long id) {
+        return repository.findById(id).map(AuthorDTO::new).orElseThrow(
                         () -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
     }
 
     @Override
-    public Author findByName(String name) {
-        return repository.findByNameIgnoreCase(name)
+    public AuthorDTO findByName(String name) {
+        return repository.findByNameIgnoreCase(name).map(AuthorDTO::new)
                 .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
     }
 
     @Override
-    public List<BookDTO> listAllBooksByAuthor(String authorName) {
-        return findByName(authorName)
-                .getBooks()
+    public List<BookDTO> listAllBooksByAuthor(String name) {
+        Author author = repository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
+        return author.getBooks()
                 .stream().map(BookDTO::new).toList();
     }
 
@@ -51,7 +52,10 @@ public class AuthorServiceImp implements AuthorService {
     @Override
     @Transactional
     public void delete(Long id) {
-        repository.delete(findById(id));
+        Author author = repository.findById(id)
+                .orElseThrow(() -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
+
+        repository.delete(author);
     }
 
 }

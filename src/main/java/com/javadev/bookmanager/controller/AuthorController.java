@@ -4,7 +4,6 @@ import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.service.author.AuthorService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

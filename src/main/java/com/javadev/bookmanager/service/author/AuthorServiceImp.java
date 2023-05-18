@@ -18,8 +18,13 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     public List<AuthorDTO> listAll() {
-
         return repository.findAll().stream().map(AuthorDTO::new).toList();
+    }
+
+    @Override
+    public Author findByName(String name) {
+        return repository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
     }
 
     @Override
@@ -35,9 +40,5 @@ public class AuthorServiceImp implements AuthorService {
         return authorDTO;
     }
 
-    @Override
-    public Author findByName(String name) {
-        return repository.findByNameIgnoreCase(name)
-                .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
-    }
+
 }

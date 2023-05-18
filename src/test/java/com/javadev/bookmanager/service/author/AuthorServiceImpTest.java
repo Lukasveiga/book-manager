@@ -6,13 +6,13 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
+import com.javadev.bookmanager.util.GenerateBookAndAuthor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -39,9 +39,9 @@ class AuthorServiceImpTest {
 
     @BeforeEach
     void setUp() {
-        authorTest = new Author("Author Test Name", "Author Test Description");
-        bookTest = new Book("Book Test Title", 9999, 999);
-        authorTest.setBooks(new HashSet<Book>(List.of(bookTest)));
+        authorTest = GenerateBookAndAuthor.generateAuthorTest();
+        bookTest = GenerateBookAndAuthor.generateBookTest();
+        authorTest.setBooks(new HashSet<>(List.of(bookTest)));
     }
 
     @Test
@@ -49,7 +49,6 @@ class AuthorServiceImpTest {
         when(repository.findAll())
                 .thenReturn(List.of(authorTest));
 
-        String expectedAuthorName = authorTest.getName();
         List<AuthorDTO> authors = service.listAll();
         assertThat(authors).isNotNull().isNotEmpty().hasSize(1);
         assertThat(authors.get(0)).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
@@ -66,7 +65,7 @@ class AuthorServiceImpTest {
     }
 
     @Test
-    void findByName_ThrowsAuthorNotFound_WhenAuthorIsNotFound() {
+    void findByName_ThrowsAuthorNotFoundException_WhenAuthorIsNotFound() {
         when(repository.findByNameIgnoreCase(any(String.class)))
                 .thenThrow(AuthorNotFoundException.class);
 

@@ -8,6 +8,7 @@ import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,12 +32,7 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public BookDTO save(BookDTO bookDTO) {
-        repository.save(bookDTO.transformToObject());
-        return bookDTO;
-    }
-
-    @Override
+    @Transactional
     public BookDTO insertAuthor(String bookName, String authorName) {
         Author author = authorService.findByName(authorName);
         Book book = findByName(bookName);
@@ -47,5 +43,11 @@ public class BookServiceImp implements BookService{
         return new BookDTO(book);
     }
 
+    @Override
+    @Transactional
+    public BookDTO save(BookDTO bookDTO) {
+        repository.save(bookDTO.transformToObject());
+        return bookDTO;
+    }
 
 }

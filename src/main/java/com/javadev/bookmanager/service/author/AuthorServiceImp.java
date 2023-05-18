@@ -7,6 +7,7 @@ import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
+    @Transactional
     public AuthorDTO save(AuthorDTO authorDTO) {
         repository.save(authorDTO.transformToObject());
         return authorDTO;

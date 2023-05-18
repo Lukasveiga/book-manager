@@ -2,6 +2,7 @@ package com.javadev.bookmanager.controller;
 
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.service.book.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookDTO> addBook(@RequestBody @Valid BookDTO bookDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(bookDTO));
     }
 

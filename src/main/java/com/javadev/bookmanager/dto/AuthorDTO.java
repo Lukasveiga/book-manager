@@ -2,6 +2,7 @@ package com.javadev.bookmanager.dto;
 
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class AuthorDTO {
 
+    @NotBlank(message = "Name is required.")
     private String name;
 
     private String about;

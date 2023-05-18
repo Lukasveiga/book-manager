@@ -32,4 +32,11 @@ public class AuthorController {
     public ResponseEntity<AuthorDTO> addAuthor(@RequestBody @Valid AuthorDTO authorDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(authorDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
+        service.delete(id);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

@@ -27,6 +27,14 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
+    public Book findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(
+                        () -> new BookNotFoundException("The book with id {" + id + "} wasn't found.")
+                );
+    }
+
+    @Override
     public Book findByName(String name) {
         return repository.findByNameIgnoreCase(name).orElseThrow(() -> new BookNotFoundException("The book {" + name + "} wasn't found."));
     }
@@ -48,6 +56,12 @@ public class BookServiceImp implements BookService{
     public BookDTO save(BookDTO bookDTO) {
         repository.save(bookDTO.transformToObject());
         return bookDTO;
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        repository.delete(findById(id));
     }
 
 }

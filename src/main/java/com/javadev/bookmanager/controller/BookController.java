@@ -32,4 +32,11 @@ public class BookController {
                                                     @RequestParam("author") String authorName) {
         return ResponseEntity.ok(service.insertAuthor(bookName, authorName));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        service.delete(id);
+
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

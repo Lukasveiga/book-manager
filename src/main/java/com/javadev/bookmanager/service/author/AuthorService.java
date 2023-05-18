@@ -15,4 +15,8 @@ public interface AuthorService {
     AuthorDTO save(AuthorDTO authorDTO);
 
     Author findByName(String name);
+
+    public Author findById(Long id);
+
+    void delete(Long id);
 }

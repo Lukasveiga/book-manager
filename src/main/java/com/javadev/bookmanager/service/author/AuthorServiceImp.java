@@ -23,6 +23,12 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
+    public Author findById(Long id) {
+        return repository.findById(id).orElseThrow(
+                        () -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
+    }
+
+    @Override
     public Author findByName(String name) {
         return repository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new AuthorNotFoundException("Author {" + name + "} wasn't found."));
@@ -42,5 +48,10 @@ public class AuthorServiceImp implements AuthorService {
         return authorDTO;
     }
 
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        repository.delete(findById(id));
+    }
 
 }

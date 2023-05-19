@@ -1,13 +1,12 @@
 package com.javadev.bookmanager.service.book;
 
-import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
+import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
-import com.javadev.bookmanager.service.author.AuthorServiceImp;
 import com.javadev.bookmanager.util.GenerateBookAndAuthor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ class BookServiceImpTest {
     private BookServiceImp service;
 
     @Mock
-    private AuthorServiceImp authorService;
+    private AuthorRepository authorRepository;
 
     @Mock
     private BookRepository repository;
@@ -114,8 +113,8 @@ class BookServiceImpTest {
         when(repository.findByNameIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
-        when(authorService.findByName(any(String.class)))
-                .thenReturn(new AuthorDTO(authorTest));
+        when(authorRepository.findByNameIgnoreCase(any(String.class)))
+                .thenReturn(Optional.ofNullable(authorTest));
 
         BookDTO bookDTO = service.insertAuthor(bookTest.getName(), authorTest.getName());
         assertThat(bookDTO).isNotNull();

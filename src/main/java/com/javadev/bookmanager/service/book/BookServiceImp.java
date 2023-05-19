@@ -3,7 +3,9 @@ package com.javadev.bookmanager.service.book;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
+import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
+import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
 import com.javadev.bookmanager.service.author.AuthorService;
@@ -19,7 +21,7 @@ public class BookServiceImp implements BookService{
 
     private final BookRepository repository;
 
-    private final AuthorService authorService;
+    private final AuthorRepository authorRepository;
 
     @Override
     public List<BookDTO> listAll() {
@@ -44,7 +46,8 @@ public class BookServiceImp implements BookService{
     @Override
     @Transactional
     public BookDTO insertAuthor(String bookName, String authorName) {
-        Author author = authorService.findByName(authorName).transformToObject();
+        Author author = authorRepository.findByNameIgnoreCase(authorName)
+                .orElseThrow(() -> new AuthorNotFoundException("Author {" + authorName + "} wasn't found."));
         Book book = repository.findByNameIgnoreCase(bookName)
                 .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
 

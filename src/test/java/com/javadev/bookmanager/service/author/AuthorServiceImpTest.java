@@ -6,7 +6,6 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
-import com.javadev.bookmanager.request.AuthorRequestBody;
 import com.javadev.bookmanager.util.GenerateBookAndAuthor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,9 +107,20 @@ class AuthorServiceImpTest {
         when(repository.save(any(Author.class)))
                 .thenReturn(authorTest);
 
-        AuthorDTO saveAuthorDTO = service.save(new AuthorRequestBody(authorTest.getName(), authorTest.getAbout()));
+        AuthorDTO saveAuthorDTO = service.save(GenerateBookAndAuthor.generateAuthorRequestBody());
         assertThat(saveAuthorDTO).isNotNull();
         assertThat(saveAuthorDTO).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
+    }
+
+    @Test
+    void update_ReturnAuthorUpdated_WhenSuccessful(){
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(authorTest));
+
+        long id = 1;
+        AuthorDTO authorUpdated = service.update(1, GenerateBookAndAuthor.generateAuthorRequestBody());
+        assertThat(authorUpdated).isNotNull();
+        assertThat(authorUpdated).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
     }
 
     @Test

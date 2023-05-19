@@ -1,6 +1,6 @@
 package com.javadev.bookmanager.request;
 
-import com.javadev.bookmanager.entities.Author;
+import com.javadev.bookmanager.entities.Book;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +11,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorRequestBody {
+public class BookPostRequestBody {
 
     @NotBlank(message = "Name is required.")
     private String name;
 
-    private String about;
+    private int year;
 
-    public Author transformToObject() {
-        return new Author(this.name, this.about);
+    private int pages;
+
+    public Book transformToObject() {
+        return new Book(this.name, this.year, this.pages);
     }
 }

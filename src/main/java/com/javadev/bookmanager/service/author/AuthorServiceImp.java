@@ -5,7 +5,7 @@ import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
-import com.javadev.bookmanager.request.AuthorRequestBody;
+import com.javadev.bookmanager.request.AuthorPostRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,14 +45,14 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     @Transactional
-    public AuthorDTO save(AuthorRequestBody authorRequestBody) {
+    public AuthorDTO save(AuthorPostRequestBody authorRequestBody) {
         Author authorSaved = repository.save(authorRequestBody.transformToObject());
         return new AuthorDTO(authorSaved);
     }
 
     @Override
     @Transactional
-    public AuthorDTO update(long id, AuthorRequestBody authorRequestBody) {
+    public AuthorDTO update(long id, AuthorPostRequestBody authorRequestBody) {
         Author authorToBeUpdated = repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
         authorToBeUpdated.setName(authorRequestBody.getName());

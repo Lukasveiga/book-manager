@@ -2,7 +2,7 @@ package com.javadev.bookmanager.service.author;
 
 import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
-import com.javadev.bookmanager.request.AuthorRequestBody;
+import com.javadev.bookmanager.request.AuthorPostRequestBody;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ public interface AuthorService {
 
     List<BookDTO> listAllBooksByAuthor(String authorName);
 
-    AuthorDTO save(AuthorRequestBody authorRequestBody);
+    AuthorDTO save(AuthorPostRequestBody authorRequestBody);
 
     AuthorDTO findByName(String name);
 
     AuthorDTO findById(long id);
 
-    AuthorDTO update(long id, AuthorRequestBody authorRequestBody);
+    AuthorDTO update(long id, AuthorPostRequestBody authorRequestBody);
 
     void delete(long id);
 }

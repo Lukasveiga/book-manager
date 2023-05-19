@@ -2,6 +2,7 @@ package com.javadev.bookmanager.repository;
 
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
+import com.javadev.bookmanager.util.GenerateBookAndAuthor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ class BookRepositoryTest {
 
     @BeforeEach
     void setup() {
-        book = new Book("Book Test", 9999, 999);
+        book = GenerateBookAndAuthor.generateBookTest();
         repository.save(book);
     }
 

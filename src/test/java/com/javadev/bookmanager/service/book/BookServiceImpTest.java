@@ -6,7 +6,7 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.BookRepository;
-import com.javadev.bookmanager.request.BookRequestBody;
+import com.javadev.bookmanager.request.BookPostRequestBody;
 import com.javadev.bookmanager.service.author.AuthorServiceImp;
 import com.javadev.bookmanager.util.GenerateBookAndAuthor;
 import org.junit.jupiter.api.BeforeEach;
@@ -104,7 +104,7 @@ class BookServiceImpTest {
                 .thenReturn(bookTest);
 
         BookDTO saveBookDTO = service
-                .save(new BookRequestBody(bookTest.getName(), bookTest.getYear(), bookTest.getPages()));
+                .save(new BookPostRequestBody(bookTest.getName(), bookTest.getYear(), bookTest.getPages()));
         assertThat(saveBookDTO).isNotNull();
         assertThat(saveBookDTO).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
@@ -121,6 +121,17 @@ class BookServiceImpTest {
         assertThat(bookDTO).isNotNull();
         assertThat(new ArrayList<>(bookDTO.getAuthors()).get(0))
                 .isEqualTo(authorTest.getName());
+    }
+
+    @Test
+    void update_ReturnBookUpdated_WhenSuccessful(){
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(bookTest));
+
+        long id = 1;
+        BookDTO bookUpdated = service.update(1, GenerateBookAndAuthor.generateBookRequestBody());
+        assertThat(bookUpdated).isNotNull();
+        assertThat(bookUpdated).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
 
     @Test

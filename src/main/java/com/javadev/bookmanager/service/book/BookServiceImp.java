@@ -5,7 +5,7 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.BookRepository;
-import com.javadev.bookmanager.request.BookRequestBody;
+import com.javadev.bookmanager.request.BookPostRequestBody;
 import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,14 +56,14 @@ public class BookServiceImp implements BookService{
 
     @Override
     @Transactional
-    public BookDTO save(BookRequestBody bookRequestBody) {
+    public BookDTO save(BookPostRequestBody bookRequestBody) {
         Book bookSaved = repository.save(bookRequestBody.transformToObject());
         return new BookDTO(bookSaved);
     }
 
     @Override
     @Transactional
-    public BookDTO update(long id, BookRequestBody bookRequestBody) {
+    public BookDTO update(long id, BookPostRequestBody bookRequestBody) {
         Book bookToBeUpdated = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
 

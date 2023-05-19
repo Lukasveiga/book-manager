@@ -27,7 +27,7 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public BookDTO findById(Long id) {
+    public BookDTO findById(long id) {
         return repository.findById(id).map(BookDTO::new)
                 .orElseThrow(
                         () -> new BookNotFoundException("The book with id {" + id + "} wasn't found.")
@@ -62,7 +62,7 @@ public class BookServiceImp implements BookService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(long id) {
         Book book = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
         repository.delete(book);

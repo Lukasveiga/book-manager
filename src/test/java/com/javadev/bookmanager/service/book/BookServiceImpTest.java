@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,6 +57,26 @@ class BookServiceImpTest {
         assertThat(bookDTOS).isNotNull().isNotEmpty().hasSize(1);
         assertThat(bookDTOS.get(0)).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
+
+    @Test
+    void findById_ReturnBookById_WhenSuccessful() {
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(bookTest));
+
+        BookDTO bookDTO = service.findById(1);
+        assertThat(bookDTO).isNotNull();
+        assertThat(bookDTO).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
+    }
+
+    @Test
+    void findById_ThrowsBookNotFoundException_WhenAuthorIsNotFound() {
+        when(repository.findById(anyLong()))
+                .thenThrow(BookNotFoundException.class);
+
+        assertThatExceptionOfType(BookNotFoundException.class)
+                .isThrownBy(() -> service.findById(1));
+    }
+
 
     @Test
     void findByName_ReturnBookByName_WhenSuccessful() {
@@ -98,5 +119,16 @@ class BookServiceImpTest {
         assertThat(bookDTO).isNotNull();
         assertThat(new ArrayList<>(bookDTO.getAuthors()).get(0))
                 .isEqualTo(authorTest.getName());
+    }
+
+    @Test
+    void delete_ReturnVoid_WhenSuccessful() {
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(bookTest));
+
+        doNothing().when(repository).delete(any(Book.class));
+
+        assertThatCode(() -> service.delete(1))
+                .doesNotThrowAnyException();
     }
 }

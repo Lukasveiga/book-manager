@@ -18,9 +18,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,8 +55,27 @@ class AuthorServiceImpTest {
     }
 
     @Test
+    void findById_ReturnAuthorById_WhenSuccessful() {
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(authorTest));
+
+        AuthorDTO authorDTO = service.findById(1);
+        assertThat(authorDTO).isNotNull();
+        assertThat(authorDTO).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
+    }
+
+    @Test
+    void findById_ThrowsAuthorNotFoundException_WhenAuthorIsNotFound() {
+        when(repository.findById(anyLong()))
+                .thenThrow(AuthorNotFoundException.class);
+
+        assertThatExceptionOfType(AuthorNotFoundException.class)
+                .isThrownBy(() -> service.findById(1));
+    }
+
+    @Test
     void findByName_ReturnAuthorByName_WhenSuccessful() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByNameIgnoreCase(anyString()))
                 .thenReturn(Optional.ofNullable(authorTest));
 
         AuthorDTO authorDTO = service.findByName(authorTest.getName());
@@ -66,7 +85,7 @@ class AuthorServiceImpTest {
 
     @Test
     void findByName_ThrowsAuthorNotFoundException_WhenAuthorIsNotFound() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByNameIgnoreCase(anyString()))
                 .thenThrow(AuthorNotFoundException.class);
 
         assertThatExceptionOfType(AuthorNotFoundException.class)
@@ -75,7 +94,7 @@ class AuthorServiceImpTest {
 
     @Test
     void listAllBooksByAuthor_ReturnBookForAuthor_WhenSuccessful() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByNameIgnoreCase(anyString()))
                 .thenReturn(Optional.ofNullable(authorTest));
 
         List<BookDTO> bookDTOS = service.listAllBooksByAuthor(authorTest.getName());
@@ -92,4 +111,16 @@ class AuthorServiceImpTest {
         assertThat(saveAuthorDTO).isNotNull();
         assertThat(saveAuthorDTO).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
     }
+
+    @Test
+    void delete_ReturnVoid_WhenSuccessful() {
+        when(repository.findById(anyLong()))
+                .thenReturn(Optional.ofNullable(authorTest));
+
+        doNothing().when(repository).delete(any(Author.class));
+
+        assertThatCode(() -> service.delete(1))
+                .doesNotThrowAnyException();
+    }
+
 }

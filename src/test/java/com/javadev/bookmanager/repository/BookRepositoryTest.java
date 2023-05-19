@@ -1,7 +1,6 @@
 package com.javadev.bookmanager.repository;
 
 import com.javadev.bookmanager.entities.Book;
-import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;

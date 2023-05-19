@@ -23,7 +23,7 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
-    public AuthorDTO findById(Long id) {
+    public AuthorDTO findById(long id) {
         return repository.findById(id).map(AuthorDTO::new).orElseThrow(
                         () -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
     }
@@ -51,7 +51,7 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(long id) {
         Author author = repository.findById(id)
                 .orElseThrow(() -> new AuthorNotFoundException("Author  with id {" + id + "} wasn't found."));
 

@@ -16,7 +16,7 @@ public interface AuthorService {
 
     AuthorDTO findByName(String name);
 
-    public AuthorDTO findById(Long id);
+    public AuthorDTO findById(long id);
 
-    void delete(Long id);
+    void delete(long id);
 }

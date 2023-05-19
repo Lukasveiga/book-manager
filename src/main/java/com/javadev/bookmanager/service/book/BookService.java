@@ -16,7 +16,7 @@ public interface BookService {
 
     BookDTO findByName(String name);
 
-    public BookDTO findById(Long id);
+    public BookDTO findById(long id);
 
-    void delete(Long id);
+    void delete(long id);
 }

@@ -1,8 +1,7 @@
 package com.javadev.bookmanager.service.book;
 
 import com.javadev.bookmanager.dto.BookDTO;
-import com.javadev.bookmanager.entities.Author;
-import com.javadev.bookmanager.entities.Book;
+import com.javadev.bookmanager.request.BookRequestBody;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ public interface BookService {
     BookDTO findByName(String name);
 
     public BookDTO findById(long id);
+
+    BookDTO update(long id, BookRequestBody bookRequestBody);
 
     void delete(long id);
 }

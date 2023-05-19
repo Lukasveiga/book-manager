@@ -5,6 +5,7 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.BookRepository;
+import com.javadev.bookmanager.request.BookRequestBody;
 import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,9 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public BookDTO findByName(String name) {
-        return repository.findByNameIgnoreCase(name).map(BookDTO::new)
-                .orElseThrow(() -> new BookNotFoundException("The book {" + name + "} wasn't found."));
+    public BookDTO findByName(String bookName) {
+        return repository.findByNameIgnoreCase(bookName).map(BookDTO::new)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
     }
 
     @Override
@@ -58,6 +59,21 @@ public class BookServiceImp implements BookService{
     public BookDTO save(BookDTO bookDTO) {
         repository.save(bookDTO.transformToObject());
         return bookDTO;
+    }
+
+    @Override
+    @Transactional
+    public BookDTO update(long id, BookRequestBody bookRequestBody) {
+        Book bookToBeUpdated = repository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
+
+        bookToBeUpdated.setName(bookRequestBody.getName());
+        bookToBeUpdated.setYear(bookRequestBody.getYear());
+        bookToBeUpdated.setPages(bookRequestBody.getPages());
+
+        repository.save(bookToBeUpdated);
+
+        return new BookDTO(bookToBeUpdated);
     }
 
     @Override

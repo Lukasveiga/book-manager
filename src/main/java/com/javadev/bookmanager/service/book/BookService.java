@@ -9,7 +9,7 @@ public interface BookService {
 
     List<BookDTO> listAll();
 
-    BookDTO save(BookDTO bookDTO);
+    BookDTO save(BookRequestBody bookRequestBody);
 
     BookDTO insertAuthor(String bookName, String authorName);
 

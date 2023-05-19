@@ -45,9 +45,9 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     @Transactional
-    public AuthorDTO save(AuthorDTO authorDTO) {
-        repository.save(authorDTO.transformToObject());
-        return authorDTO;
+    public AuthorDTO save(AuthorRequestBody authorRequestBody) {
+        Author authorSaved = repository.save(authorRequestBody.transformToObject());
+        return new AuthorDTO(authorSaved);
     }
 
     @Override

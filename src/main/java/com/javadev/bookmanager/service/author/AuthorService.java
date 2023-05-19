@@ -12,7 +12,7 @@ public interface AuthorService {
 
     List<BookDTO> listAllBooksByAuthor(String authorName);
 
-    AuthorDTO save(AuthorDTO authorDTO);
+    AuthorDTO save(AuthorRequestBody authorRequestBody);
 
     AuthorDTO findByName(String name);
 

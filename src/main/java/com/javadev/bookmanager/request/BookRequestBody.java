@@ -1,5 +1,6 @@
 package com.javadev.bookmanager.request;
 
+import com.javadev.bookmanager.entities.Book;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,8 @@ public class BookRequestBody {
     private int year;
 
     private int pages;
+
+    public Book transformToObject() {
+        return new Book(this.name, this.year, this.pages);
+    }
 }

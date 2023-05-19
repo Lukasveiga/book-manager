@@ -2,6 +2,7 @@ package com.javadev.bookmanager.controller;
 
 import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
+import com.javadev.bookmanager.request.AuthorRequestBody;
 import com.javadev.bookmanager.service.author.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody @Valid AuthorDTO authorDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(authorDTO));
+    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody @Valid AuthorRequestBody authorRequestBody) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(authorRequestBody));
     }
 
     @DeleteMapping("/{id}")

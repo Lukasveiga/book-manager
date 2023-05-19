@@ -56,9 +56,9 @@ public class BookServiceImp implements BookService{
 
     @Override
     @Transactional
-    public BookDTO save(BookDTO bookDTO) {
-        repository.save(bookDTO.transformToObject());
-        return bookDTO;
+    public BookDTO save(BookRequestBody bookRequestBody) {
+        Book bookSaved = repository.save(bookRequestBody.transformToObject());
+        return new BookDTO(bookSaved);
     }
 
     @Override

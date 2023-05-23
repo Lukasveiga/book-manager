@@ -3,8 +3,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/book-manager
-    username: postgres
-    password: 1234567
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   # JPA properties
   jpa:
     hibernate:

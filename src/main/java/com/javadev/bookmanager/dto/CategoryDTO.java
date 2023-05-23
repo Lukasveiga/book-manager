@@ -20,4 +20,8 @@ public class CategoryDTO {
         this.name = category.getName();
     }
 
+    public Category transformToObject(){
+        return new Category(this.name);
+    }
+
 }

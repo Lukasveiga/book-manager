@@ -30,6 +30,12 @@ public class Book {
     @Column(name = "pages")
     private int pages;
 
+    @Column(name = "language")
+    private String language;
+
+    @Column(name = "image")
+    private String image;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "book_author",
@@ -43,10 +49,12 @@ public class Book {
 
     // private boolean isAvailable;
 
-    public Book(String name, int year, int pages) {
+    public Book(String name, int year, int pages, String language, String image) {
         this.title = name;
         this.year = year;
         this.pages = pages;
+        this.language = language;
+        this.image = image;
     }
 
     public void addAuthor(Author author) {

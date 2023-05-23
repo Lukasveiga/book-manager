@@ -14,7 +14,7 @@ Spring Boot - Rest API Book Manager
 - DELETE/{id}: inactivate() --> Will be implemented
 - DELETE /delete/{id}: delete()
 
-#### **- Model**
+#### **Model**
 
 ```json
 {
@@ -43,7 +43,7 @@ Spring Boot - Rest API Book Manager
 - PUT /{id}: update()
 - DELETE /{id}: delete()
 
-#### **- Model**
+#### **Model**
 
 ```json
 {
@@ -66,7 +66,7 @@ Spring Boot - Rest API Book Manager
 - PUT /{id}: update()
 - DELETE /{id}: delete()
 
-#### **- Model**
+#### **Model**
 
 ```json
 {

@@ -2,7 +2,7 @@ package com.javadev.bookmanager.repository;
 
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
-import com.javadev.bookmanager.util.GenerateBookAndAuthor;
+import com.javadev.bookmanager.util.GenerateBookAuthorCategory;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ class AuthorRepositoryTest {
 
     @BeforeEach
     void setup() {
-        author = GenerateBookAndAuthor.generateAuthorTest();
+        author = GenerateBookAuthorCategory.generateAuthorTest();
         repository.save(author);
     }
 

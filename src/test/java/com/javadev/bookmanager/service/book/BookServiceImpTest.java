@@ -7,7 +7,7 @@ import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
-import com.javadev.bookmanager.util.GenerateBookAndAuthor;
+import com.javadev.bookmanager.util.GenerateBookAuthorCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,8 +43,8 @@ class BookServiceImpTest {
 
     @BeforeEach
     void setUp() {
-        authorTest = GenerateBookAndAuthor.generateAuthorTest();
-        bookTest = GenerateBookAndAuthor.generateBookTest();
+        authorTest = GenerateBookAuthorCategory.generateAuthorTest();
+        bookTest = GenerateBookAuthorCategory.generateBookTest();
         bookTest.addAuthor(authorTest);
     }
 
@@ -130,7 +130,7 @@ class BookServiceImpTest {
                 .thenReturn(Optional.ofNullable(bookTest));
 
         long id = 1;
-        BookDTO bookUpdated = service.update(1, GenerateBookAndAuthor.generateBookRequestBody());
+        BookDTO bookUpdated = service.update(1, GenerateBookAuthorCategory.generateBookRequestBody());
         assertThat(bookUpdated).isNotNull();
         assertThat(bookUpdated).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }

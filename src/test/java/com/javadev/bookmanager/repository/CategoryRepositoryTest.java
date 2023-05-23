@@ -1,6 +1,7 @@
 package com.javadev.bookmanager.repository;
 
 import com.javadev.bookmanager.entities.Book;
+import com.javadev.bookmanager.entities.Category;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.util.GenerateBookAuthorCategory;
 import org.assertj.core.api.Assertions;
@@ -11,41 +12,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-class BookRepositoryTest {
+class CategoryRepositoryTest {
 
     @Autowired
-    private BookRepository repository;
+    private CategoryRepository repository;
 
-    private Book book;
+    private Category category;
 
     @BeforeEach
     void setup() {
-        book = GenerateBookAuthorCategory.generateBookTest();
-        repository.save(book);
+        category = GenerateBookAuthorCategory.generateCategoryTest();
+        repository.save(category);
     }
 
     @AfterEach
     void tearDown() {
-        book = null;
+        category = null;
         this.repository.deleteAll();
     }
 
     @Test
-    void findByTitleIgnoreCase_returnBookByName_WhenSuccessful(){
-        Book bookTest = repository.findByTitleIgnoreCase(book.getTitle()).orElse(new Book());
+    void findByNameIgnoreCase_returnBookByName_WhenSuccessful(){
+        Category categoryTest = repository.findByNameIgnoreCase(category.getName()).orElse(new Category());
         Assertions
-                .assertThat(bookTest)
+                .assertThat(categoryTest)
                 .isNotNull()
-                .isEqualTo(book);
+                .isEqualTo(categoryTest);
     }
 
     @Test
-    void findByTitleIgnoreCase_ThrowBookNotFoundException_WhenBookIsNotFound(){
-        String bookNameTest = "Book Test Exception";
+    void findByNameIgnoreCase_ThrowCategoryNotFoundException_WhenCategoryIsNotFound(){
+        String categoryTestName = "Category Test Exception";
         Assertions.assertThatExceptionOfType(BookNotFoundException.class)
                 .isThrownBy(() -> {
                     repository
-                            .findByTitleIgnoreCase(bookNameTest)
+                            .findByNameIgnoreCase(categoryTestName)
                             .orElseThrow(() -> new BookNotFoundException(""));
                 });
     }

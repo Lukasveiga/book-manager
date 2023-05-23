@@ -87,7 +87,7 @@ public class BookServiceImp implements BookService{
         Book bookToBeUpdated = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
 
-        bookToBeUpdated.setTitle(bookRequestBody.getName());
+        bookToBeUpdated.setTitle(bookRequestBody.getTitle());
         bookToBeUpdated.setYear(bookRequestBody.getYear());
         bookToBeUpdated.setPages(bookRequestBody.getPages());
 

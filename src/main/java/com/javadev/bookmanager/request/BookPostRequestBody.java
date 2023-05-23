@@ -14,7 +14,7 @@ import lombok.Setter;
 public class BookPostRequestBody {
 
     @NotBlank(message = "Name is required.")
-    private String name;
+    private String title;
 
     private int year;
 
@@ -26,6 +26,6 @@ public class BookPostRequestBody {
 
 
     public Book transformToObject() {
-        return new Book(this.name, this.year, this.pages, this.language, this.image);
+        return new Book(this.title, this.year, this.pages, this.language, this.image);
     }
 }

@@ -23,9 +23,20 @@ public class BookController {
         return ResponseEntity.ok(service.listAll());
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<BookDTO> findByTitle(@PathVariable("title") String title) {
+        return ResponseEntity.ok(service.findByTitle(title));
+    }
+
     @PostMapping
     public ResponseEntity<BookDTO> addBook(@RequestBody @Valid BookPostRequestBody bookRequestBody) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(bookRequestBody));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDTO> updateBook(@PathVariable("id") long id,
+                                              @RequestBody @Valid BookPostRequestBody bookRequestBody) {
+        return ResponseEntity.ok(service.update(id, bookRequestBody));
     }
 
     @PatchMapping

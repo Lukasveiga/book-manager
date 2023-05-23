@@ -37,7 +37,7 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public BookDTO findByName(String bookName) {
+    public BookDTO findByTitle(String bookName) {
         return repository.findByTitleIgnoreCase(bookName).map(BookDTO::new)
                 .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
     }

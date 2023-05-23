@@ -20,7 +20,12 @@ public class BookPostRequestBody {
 
     private int pages;
 
+    private String language;
+
+    private String image;
+
+
     public Book transformToObject() {
-        return new Book(this.name, this.year, this.pages);
+        return new Book(this.name, this.year, this.pages, this.language, this.image);
     }
 }

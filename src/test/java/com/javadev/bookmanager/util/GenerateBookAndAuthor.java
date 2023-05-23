@@ -16,12 +16,16 @@ public class GenerateBookAndAuthor {
 
     private static final int BOOK_TEST_PAGES = 999;
 
+    private static final String BOOK_TEST_LANGUAGE = "portguês-br";
+
+    private static final String BOOK_TEST_IMAGE = "www.google-images.com.br/book.png";
+
     public static Author generateAuthorTest() {
         return new Author(AUTHOR_TEST_NAME, AUTHOR_TEST_ABOUT);
     }
 
     public static Book generateBookTest() {
-        return new Book(BOOK_TEST_NAME, BOOK_TEST_YEAR, BOOK_TEST_PAGES);
+        return new Book(BOOK_TEST_NAME, BOOK_TEST_YEAR, BOOK_TEST_PAGES, BOOK_TEST_LANGUAGE, BOOK_TEST_IMAGE);
     }
 
     public static AuthorPostRequestBody generateAuthorRequestBody(){
@@ -29,6 +33,6 @@ public class GenerateBookAndAuthor {
     }
 
     public static BookPostRequestBody generateBookRequestBody(){
-        return new BookPostRequestBody(BOOK_TEST_NAME, BOOK_TEST_YEAR, BOOK_TEST_PAGES);
+        return new BookPostRequestBody(BOOK_TEST_NAME, BOOK_TEST_YEAR, BOOK_TEST_PAGES, BOOK_TEST_LANGUAGE, BOOK_TEST_IMAGE);
     }
 }

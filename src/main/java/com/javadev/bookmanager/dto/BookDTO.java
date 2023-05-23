@@ -22,12 +22,18 @@ public class BookDTO {
 
     private int pages;
 
+    private String language;
+
+    private String image;
+
     private Set<String> authors = new HashSet<>();
 
     public BookDTO(Book book) {
         this.title = book.getTitle();
         this.year = book.getYear();
         this.pages = book.getPages();
+        this.language = book.getLanguage();
+        this.image = book.getImage();
         this.authors.addAll(book.getAuthors()
                                     .stream()
                                     .map(Author::getName).toList());

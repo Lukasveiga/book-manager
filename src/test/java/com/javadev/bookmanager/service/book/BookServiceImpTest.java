@@ -83,7 +83,7 @@ class BookServiceImpTest {
         when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
-        BookDTO book = service.findByName(bookTest.getTitle());
+        BookDTO book = service.findByTitle(bookTest.getTitle());
         assertThat(book).isNotNull();
         assertThat(book).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
@@ -94,7 +94,7 @@ class BookServiceImpTest {
                 .thenThrow(BookNotFoundException.class);
 
         assertThatExceptionOfType(BookNotFoundException.class)
-                .isThrownBy(() -> service.findByName(""));
+                .isThrownBy(() -> service.findByTitle(""));
     }
 
     @Test
@@ -103,7 +103,9 @@ class BookServiceImpTest {
                 .thenReturn(bookTest);
 
         BookDTO saveBookDTO = service
-                .save(new BookPostRequestBody(bookTest.getTitle(), bookTest.getYear(), bookTest.getPages()));
+                .save(new BookPostRequestBody(bookTest.getTitle(), bookTest.getYear(),
+                                              bookTest.getPages(), bookTest.getLanguage(),
+                                              bookTest.getImage()));
         assertThat(saveBookDTO).isNotNull();
         assertThat(saveBookDTO).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }

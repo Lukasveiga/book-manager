@@ -7,7 +7,7 @@ Spring Boot - Rest API Book Manager
 - BaseURL: /api/v1/books
 - POST: create()
 - GET: getAll()
-- GET /{name}: getByName()
+- GET /{title}: getByTitle()
 - PUT /{id}: update()
 - PATCH ?book= & author=: addAuthorToABook()
 - PATCH ?book= & category=: addCategoryToABook()
@@ -26,8 +26,8 @@ Spring Boot - Rest API Book Manager
     "pages": 320,
     "language": "português-br",
     "image":"http://google.com/LicoesPreliminaresDeDireito.png",
-    "price": 22.90,
-    "is-available": true
+    "price": 22.90 --> Will be implemented,
+    "is-available": true --> Will be implemented(Microservice)
 }
 ```
 

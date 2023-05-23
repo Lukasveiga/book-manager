@@ -13,9 +13,9 @@ public interface BookService {
 
     BookDTO insertAuthor(String bookName, String authorName);
 
-    BookDTO findByName(String name);
+    BookDTO findByTitle(String name);
 
-    public BookDTO findById(long id);
+    BookDTO findById(long id);
 
     BookDTO update(long id, BookPostRequestBody bookRequestBody);
 

@@ -3,10 +3,13 @@ package com.javadev.bookmanager.service.book;
 import com.javadev.bookmanager.dto.BookDTO;
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
+import com.javadev.bookmanager.entities.Category;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
+import com.javadev.bookmanager.exceptions.CategoryNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.repository.BookRepository;
+import com.javadev.bookmanager.repository.CategoryRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ public class BookServiceImp implements BookService{
     private final BookRepository repository;
 
     private final AuthorRepository authorRepository;
+
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<BookDTO> listAll() {
@@ -51,6 +56,19 @@ public class BookServiceImp implements BookService{
                 .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
 
         book.addAuthor(author);
+        repository.save(book);
+
+        return new BookDTO(book);
+    }
+
+    @Override
+    public BookDTO insertCategory(String bookName, String categoryName) {
+        Category category = categoryRepository.findByNameIgnoreCase(categoryName)
+                .orElseThrow(() -> new CategoryNotFoundException("Category {" + categoryName + "} wasn't found."));
+        Book book = repository.findByTitleIgnoreCase(bookName)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
+
+        book.addCategory(category);
         repository.save(book);
 
         return new BookDTO(book);

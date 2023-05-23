@@ -39,10 +39,16 @@ public class BookController {
         return ResponseEntity.ok(service.update(id, bookRequestBody));
     }
 
-    @PatchMapping
+    @PatchMapping("/add-author")
     public ResponseEntity<BookDTO> addAuthorToABook(@RequestParam("book") String bookName,
                                                     @RequestParam("author") String authorName) {
         return ResponseEntity.ok(service.insertAuthor(bookName, authorName));
+    }
+
+    @PatchMapping("/add-category")
+    public ResponseEntity<BookDTO> addCategoryToABook(@RequestParam("book") String bookName,
+                                                    @RequestParam("category") String categoryName) {
+        return ResponseEntity.ok(service.insertCategory(bookName, categoryName));
     }
 
     @DeleteMapping("/{id}")

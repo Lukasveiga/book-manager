@@ -2,6 +2,7 @@ package com.javadev.bookmanager.dto;
 
 import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
+import com.javadev.bookmanager.entities.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,8 @@ public class BookDTO {
 
     private Set<String> authors = new HashSet<>();
 
+    private Set<String> categories = new HashSet<>();
+
     public BookDTO(Book book) {
         this.title = book.getTitle();
         this.year = book.getYear();
@@ -37,5 +40,8 @@ public class BookDTO {
         this.authors.addAll(book.getAuthors()
                                     .stream()
                                     .map(Author::getName).toList());
+        this.categories.addAll(book.getCategories()
+                                       .stream()
+                                       .map(Category::getName).toList());
     }
 }

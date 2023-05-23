@@ -13,6 +13,8 @@ public interface BookService {
 
     BookDTO insertAuthor(String bookName, String authorName);
 
+    BookDTO insertCategory(String bookName, String categoryName);
+
     BookDTO findByTitle(String name);
 
     BookDTO findById(long id);

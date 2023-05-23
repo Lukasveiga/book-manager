@@ -43,6 +43,13 @@ public class Book {
     inverseJoinColumns = @JoinColumn(name = "id_author"))
     private Set<Author> authors = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "book_category",
+            joinColumns = @JoinColumn(name = "id_book"),
+            inverseJoinColumns = @JoinColumn(name = "id_category"))
+    private Set<Category> categories = new HashSet<>();
+
     // private List<Category> categories;
 
     // private double price;
@@ -59,6 +66,10 @@ public class Book {
 
     public void addAuthor(Author author) {
         authors.add(author);
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
     }
 
     @Override

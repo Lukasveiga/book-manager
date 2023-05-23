@@ -39,7 +39,7 @@ Spring Boot - Rest API Book Manager
 - BaseURL: /api/v1/authors
 - POST: create()
 - GET: getAll()
-- GET /name={name}: getByName()
+- GET /{name}: getByName()
 - PUT /{id}: update()
 - DELETE /{id}: delete()
 

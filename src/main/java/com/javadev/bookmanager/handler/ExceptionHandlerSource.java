@@ -2,6 +2,7 @@ package com.javadev.bookmanager.handler;
 
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
+import com.javadev.bookmanager.exceptions.CategoryNotFoundException;
 import com.javadev.bookmanager.exceptions.ExceptionDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +39,19 @@ public class ExceptionHandlerSource extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ExceptionDetails> bookNotFound(BookNotFoundException ex, HttpServletRequest request) {
+
+        return new ResponseEntity<>(
+                ExceptionDetails
+                        .builder()
+                        .path(request.getRequestURI())
+                        .message(ex.getMessage())
+                        .statusCode(HttpStatus.NOT_FOUND.value())
+                        .localDateTime(LocalDateTime.now())
+                        .build(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ExceptionDetails> CategoryNotFound(CategoryNotFoundException ex, HttpServletRequest request) {
 
         return new ResponseEntity<>(
                 ExceptionDetails

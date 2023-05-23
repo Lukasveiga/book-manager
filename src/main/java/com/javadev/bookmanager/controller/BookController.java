@@ -23,7 +23,7 @@ public class BookController {
         return ResponseEntity.ok(service.listAll());
     }
 
-    @GetMapping("/title/{title}")
+    @GetMapping("/{title}")
     public ResponseEntity<BookDTO> findByTitle(@PathVariable("title") String title) {
         return ResponseEntity.ok(service.findByTitle(title));
     }

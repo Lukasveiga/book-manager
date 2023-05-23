@@ -79,7 +79,7 @@ class BookServiceImpTest {
 
 
     @Test
-    void findByName_ReturnBookByName_WhenSuccessful() {
+    void findByTitle_ReturnBookByName_WhenSuccessful() {
         when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
@@ -89,7 +89,7 @@ class BookServiceImpTest {
     }
 
     @Test
-    void findByName_ThrowsBookNotFoundException_WhenBookIsNotFound() {
+    void findByTitle_ThrowsBookNotFoundException_WhenBookIsNotFound() {
         when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenThrow(BookNotFoundException.class);
 

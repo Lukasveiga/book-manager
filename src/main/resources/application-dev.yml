@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/book-manager
+    username: postgres
+    password: 1234567
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties.hibernate:
+      jdbc:
+        lob:
+          non_contextual_creation: true
+  hibernate:
+    ddl-auto: none
+
+  properties:
+    jakarta:
+      persistence:
+        schema-generation:
+
+#          create-source: metadata
+#
+#    hibernate:
+#      hbm2ddl:
+#        delimiter: ;
+#
+#  scripts:
+#    action: create
+#
+#  create-target: create.sql

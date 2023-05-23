@@ -20,12 +20,12 @@ Spring Boot - Rest API Book Manager
 {
     "id" : 1,
     "title": "Licoes Preliminares De Direito",
-    "author": "Miguel Reale",
     "year": 1984,
     "category": "Direito",
     "pages": 320,
     "language": "português-br",
     "image":"http://google.com/LicoesPreliminaresDeDireito.png",
+    "authors":["Miguel Reale"],
     "price": 22.90 --> Will be implemented,
     "is-available": true --> Will be implemented(Microservice)
 }
@@ -49,7 +49,8 @@ Spring Boot - Rest API Book Manager
 {
     "id": 1,
     "name": "James Clear",
-    "about" : "description"
+    "about" : "description",
+    "books": ["Licoes Preliminares De Direito"]
 }
 ```
 

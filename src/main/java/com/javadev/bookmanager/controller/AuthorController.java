@@ -24,6 +24,11 @@ public class AuthorController {
         return ResponseEntity.ok(service.listAll());
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity<AuthorDTO> findByName(@PathVariable String name) {
+        return ResponseEntity.ok(service.findByName(name));
+    }
+
     @GetMapping("/{author}/books")
     public ResponseEntity<List<BookDTO>> findAllBooksByAuthor(@PathVariable String author) {
         return ResponseEntity.ok(service.listAllBooksByAuthor(author));
@@ -32,6 +37,12 @@ public class AuthorController {
     @PostMapping
     public ResponseEntity<AuthorDTO> addAuthor(@RequestBody @Valid AuthorPostRequestBody authorRequestBody) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(authorRequestBody));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable("id") long id,
+                                                  @RequestBody @Valid AuthorPostRequestBody authorPostRequestBody) {
+        return ResponseEntity.ok(service.update(id, authorPostRequestBody));
     }
 
     @DeleteMapping("/{id}")

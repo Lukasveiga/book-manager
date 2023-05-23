@@ -27,13 +27,6 @@ public class AuthorDTO {
         this.about = author.getAbout();
 
         this.books.addAll(
-                author.getBooks().stream().map(Book::getName).toList());
-    }
-
-    public Author transformToObject() {
-        return new Author(
-                this.name,
-                this.about
-        );
+                author.getBooks().stream().map(Book::getTitle).toList());
     }
 }

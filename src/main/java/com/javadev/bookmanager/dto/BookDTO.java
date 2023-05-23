@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class BookDTO {
 
-    private String name;
+    private String title;
 
     private int year;
 
@@ -25,19 +25,11 @@ public class BookDTO {
     private Set<String> authors = new HashSet<>();
 
     public BookDTO(Book book) {
-        this.name = book.getName();
+        this.title = book.getTitle();
         this.year = book.getYear();
         this.pages = book.getPages();
         this.authors.addAll(book.getAuthors()
                                     .stream()
                                     .map(Author::getName).toList());
-    }
-
-    public Book transformToObject() {
-        return new Book(
-                this.name,
-                this.year,
-                this.pages
-        );
     }
 }

@@ -21,11 +21,13 @@ public class Book {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "book_year")
     private int year;
 
+    @Column(name = "pages")
     private int pages;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
@@ -42,7 +44,7 @@ public class Book {
     // private boolean isAvailable;
 
     public Book(String name, int year, int pages) {
-        this.name = name;
+        this.title = name;
         this.year = year;
         this.pages = pages;
     }
@@ -56,11 +58,11 @@ public class Book {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
         Book book = (Book) o;
-        return Objects.equals(name, book.name);
+        return Objects.equals(title, book.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(title);
     }
 }

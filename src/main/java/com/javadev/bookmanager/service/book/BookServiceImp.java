@@ -8,7 +8,6 @@ import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
-import com.javadev.bookmanager.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,7 @@ public class BookServiceImp implements BookService{
 
     @Override
     public BookDTO findByName(String bookName) {
-        return repository.findByNameIgnoreCase(bookName).map(BookDTO::new)
+        return repository.findByTitleIgnoreCase(bookName).map(BookDTO::new)
                 .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
     }
 
@@ -48,7 +47,7 @@ public class BookServiceImp implements BookService{
     public BookDTO insertAuthor(String bookName, String authorName) {
         Author author = authorRepository.findByNameIgnoreCase(authorName)
                 .orElseThrow(() -> new AuthorNotFoundException("Author {" + authorName + "} wasn't found."));
-        Book book = repository.findByNameIgnoreCase(bookName)
+        Book book = repository.findByTitleIgnoreCase(bookName)
                 .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
 
         book.addAuthor(author);
@@ -70,7 +69,7 @@ public class BookServiceImp implements BookService{
         Book bookToBeUpdated = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
 
-        bookToBeUpdated.setName(bookRequestBody.getName());
+        bookToBeUpdated.setTitle(bookRequestBody.getName());
         bookToBeUpdated.setYear(bookRequestBody.getYear());
         bookToBeUpdated.setPages(bookRequestBody.getPages());
 

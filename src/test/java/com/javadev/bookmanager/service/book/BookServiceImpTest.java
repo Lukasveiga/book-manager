@@ -80,17 +80,17 @@ class BookServiceImpTest {
 
     @Test
     void findByName_ReturnBookByName_WhenSuccessful() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
-        BookDTO book = service.findByName(bookTest.getName());
+        BookDTO book = service.findByName(bookTest.getTitle());
         assertThat(book).isNotNull();
         assertThat(book).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
 
     @Test
     void findByName_ThrowsBookNotFoundException_WhenBookIsNotFound() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenThrow(BookNotFoundException.class);
 
         assertThatExceptionOfType(BookNotFoundException.class)
@@ -103,20 +103,20 @@ class BookServiceImpTest {
                 .thenReturn(bookTest);
 
         BookDTO saveBookDTO = service
-                .save(new BookPostRequestBody(bookTest.getName(), bookTest.getYear(), bookTest.getPages()));
+                .save(new BookPostRequestBody(bookTest.getTitle(), bookTest.getYear(), bookTest.getPages()));
         assertThat(saveBookDTO).isNotNull();
         assertThat(saveBookDTO).usingRecursiveComparison().isEqualTo(new BookDTO(bookTest));
     }
 
     @Test
     void insertAuthor_ReturnBookDTO_WhenSuccessful() {
-        when(repository.findByNameIgnoreCase(any(String.class)))
+        when(repository.findByTitleIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(bookTest));
 
         when(authorRepository.findByNameIgnoreCase(any(String.class)))
                 .thenReturn(Optional.ofNullable(authorTest));
 
-        BookDTO bookDTO = service.insertAuthor(bookTest.getName(), authorTest.getName());
+        BookDTO bookDTO = service.insertAuthor(bookTest.getTitle(), authorTest.getName());
         assertThat(bookDTO).isNotNull();
         assertThat(new ArrayList<>(bookDTO.getAuthors()).get(0))
                 .isEqualTo(authorTest.getName());

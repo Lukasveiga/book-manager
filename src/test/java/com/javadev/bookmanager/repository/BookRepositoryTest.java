@@ -32,7 +32,7 @@ class BookRepositoryTest {
 
     @Test
     void findByNameIgnoreCase_returnBookByName_WhenSuccessful(){
-        Book bookTest = repository.findByNameIgnoreCase(book.getName()).orElse(new Book());
+        Book bookTest = repository.findByTitleIgnoreCase(book.getTitle()).orElse(new Book());
         Assertions
                 .assertThat(bookTest)
                 .isNotNull()
@@ -45,7 +45,7 @@ class BookRepositoryTest {
         Assertions.assertThatExceptionOfType(BookNotFoundException.class)
                 .isThrownBy(() -> {
                     repository
-                            .findByNameIgnoreCase(bookNameTest)
+                            .findByTitleIgnoreCase(bookNameTest)
                             .orElseThrow(() -> new BookNotFoundException(""));
                 });
     }

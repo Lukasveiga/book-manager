@@ -21,6 +21,7 @@ import static com.javadev.bookmanager.util.GenerateBookAuthorCategory.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -58,7 +59,7 @@ class AuthorControllerTest {
     @Test
     public void findByName_ReturnAuthorByName_WhenSuccessful(){
         String authorName = authorTest.getName();
-        when(service.findByName(authorName))
+        when(service.findByName(anyString()))
                 .thenReturn(new AuthorDTO(authorTest));
         AuthorDTO author = controller.findByName(authorName).getBody();
         assertThat(author).isNotNull();
@@ -68,7 +69,7 @@ class AuthorControllerTest {
     @Test
     public void findAllBooksByAuthor_ReturnListOfBooksByAuthor_WhenSuccessful(){
         String authorName = authorTest.getName();
-        when(service.listAllBooksByAuthor(authorName))
+        when(service.listAllBooksByAuthor(anyString()))
                 .thenReturn(List.of(new BookDTO(bookTest)));
         List<BookDTO> books = controller.findAllBooksByAuthor(authorName).getBody();
         assertThat(books).isNotNull().isNotEmpty().hasSize(1);

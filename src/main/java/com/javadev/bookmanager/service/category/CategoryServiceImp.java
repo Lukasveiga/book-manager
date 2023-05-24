@@ -7,6 +7,7 @@ import com.javadev.bookmanager.exceptions.CategoryNotFoundException;
 import com.javadev.bookmanager.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,12 +43,14 @@ public class CategoryServiceImp implements CategoryService{
     }
 
     @Override
+    @Transactional
     public CategoryDTO save(CategoryDTO categoryDTO) {
         Category categorySaved = repository.save(categoryDTO.transformToObject());
         return new CategoryDTO(categorySaved);
     }
 
     @Override
+    @Transactional
     public CategoryDTO update(long id, CategoryDTO categoryDTO) {
         Category categoryToBeUpdated = repository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category  with id {" + id + "} wasn't found."));
@@ -57,6 +60,7 @@ public class CategoryServiceImp implements CategoryService{
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         Category category = repository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category  with id {" + id + "} wasn't found."));

@@ -62,6 +62,7 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
+    @Transactional
     public BookDTO insertCategory(String bookTitle, String categoryName) {
         Category category = categoryRepository.findByNameIgnoreCase(categoryName)
                 .orElseThrow(() -> new CategoryNotFoundException("Category {" + categoryName + "} wasn't found."));

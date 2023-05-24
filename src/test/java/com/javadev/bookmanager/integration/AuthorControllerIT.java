@@ -37,6 +37,29 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
         assertThat(authors.get(0)).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorSaved));
     }
 
+    @Test
+    public void findAll_ReturnEmptyList_WhenAuthorDatabaseIsEmpty() {
+        repository.deleteAll();
+
+        List<AuthorDTO> authors = testRestTemplate.
+                exchange("/api/v1/authors", HttpMethod.GET, null,
+                         new ParameterizedTypeReference<List<AuthorDTO>>() {
+                         }).getBody();
+        assertThat(authors).isNotNull().isEmpty();
+    }
+
+    /*@Test
+    public void findByName_ReturnAuthorByName_WhenSuccessful(){
+        Author authorSaved = repository.save(GenerateBookAuthorCategory.generateAuthorTest());
+
+        testRestTemplate
+                .exchange("/api/v1/authors", HttpMethod.GET, null,
+                          new ParameterizedTypeReference<AuthorDTO>() {
+        }).getBody();
+        assertThat(author).isNotNull();
+        assertThat(author).usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));
+    }*/
+
 
 
 }

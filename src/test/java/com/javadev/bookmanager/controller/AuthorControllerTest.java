@@ -6,6 +6,7 @@ import com.javadev.bookmanager.entities.Author;
 import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.request.AuthorPostRequestBody;
 import com.javadev.bookmanager.service.author.AuthorService;
+import com.javadev.bookmanager.util.GenerateBookAuthorCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static com.javadev.bookmanager.util.GenerateBookAuthorCategory.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.doNothing;
@@ -75,8 +77,8 @@ class AuthorControllerTest {
 
     @Test
     public void addAuthor_ShouldSaveAndReturnSavedAuthor_WhenSuccessful(){
-        AuthorPostRequestBody authorRequest = generateAuthorRequestBody();
-        when(service.save(authorRequest))
+        AuthorPostRequestBody authorRequest = GenerateBookAuthorCategory.generateAuthorRequestBody();
+        when(service.save(any(AuthorPostRequestBody.class)))
                 .thenReturn(new AuthorDTO(authorTest));
         AuthorDTO authorSaved = controller.addAuthor(authorRequest).getBody();
         assertThat(authorSaved).isNotNull().usingRecursiveComparison().isEqualTo(new AuthorDTO(authorTest));

@@ -49,11 +49,11 @@ public class BookServiceImp implements BookService{
 
     @Override
     @Transactional
-    public BookDTO insertAuthor(String bookName, String authorName) {
+    public BookDTO insertAuthor(String bookTitle, String authorName) {
         Author author = authorRepository.findByNameIgnoreCase(authorName)
                 .orElseThrow(() -> new AuthorNotFoundException("Author {" + authorName + "} wasn't found."));
-        Book book = repository.findByTitleIgnoreCase(bookName)
-                .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
+        Book book = repository.findByTitleIgnoreCase(bookTitle)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + bookTitle + "} wasn't found."));
 
         book.addAuthor(author);
         repository.save(book);
@@ -62,11 +62,11 @@ public class BookServiceImp implements BookService{
     }
 
     @Override
-    public BookDTO insertCategory(String bookName, String categoryName) {
+    public BookDTO insertCategory(String bookTitle, String categoryName) {
         Category category = categoryRepository.findByNameIgnoreCase(categoryName)
                 .orElseThrow(() -> new CategoryNotFoundException("Category {" + categoryName + "} wasn't found."));
-        Book book = repository.findByTitleIgnoreCase(bookName)
-                .orElseThrow(() -> new BookNotFoundException("The book {" + bookName + "} wasn't found."));
+        Book book = repository.findByTitleIgnoreCase(bookTitle)
+                .orElseThrow(() -> new BookNotFoundException("The book {" + bookTitle + "} wasn't found."));
 
         book.addCategory(category);
         repository.save(book);

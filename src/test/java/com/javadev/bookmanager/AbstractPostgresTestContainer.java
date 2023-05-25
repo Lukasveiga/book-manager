@@ -12,6 +12,17 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public abstract class AbstractPostgresTestContainer {
 
     @Container
+    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14-alpine");
+
+    @DynamicPropertySource
+    public static void overrideProps(DynamicPropertyRegistry registry) {
+        registry.add("spring.jpa.hibernate.ddl-auto",() -> "update");
+        registry.add("spring.datasource.url", container::getJdbcUrl);
+        registry.add("spring.datasource.username", container::getUsername);
+        registry.add("spring.datasource.password", container::getPassword);
+    }
+
+    /*@Container
     private static final PostgreSQLContainer<?> container =
             new PostgreSQLContainer<>("postgres:14-alpine");
 
@@ -21,7 +32,7 @@ public abstract class AbstractPostgresTestContainer {
         registry.add("spring.datasource.url", container::getJdbcUrl);
         registry.add("spring.datasource.username", container::getUsername);
         registry.add("spring.datasource.password", container::getPassword);
-    }
+    }*/
 
 
 }

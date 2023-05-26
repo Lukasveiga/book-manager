@@ -3,8 +3,6 @@ package com.javadev.bookmanager.integration;
 import com.javadev.bookmanager.AbstractPostgresTestContainer;
 import com.javadev.bookmanager.dto.AuthorDTO;
 import com.javadev.bookmanager.dto.BookDTO;
-import com.javadev.bookmanager.entities.Author;
-import com.javadev.bookmanager.entities.Book;
 import com.javadev.bookmanager.repository.AuthorRepository;
 import com.javadev.bookmanager.request.AuthorPostRequestBody;
 import com.javadev.bookmanager.util.GenerateBookAuthorCategory;
@@ -30,43 +28,43 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
     @Autowired
     private AuthorRepository repository;
 
-    private Author authorTest;
+    private static final String AUTHOR_TEST_NAME_IN_DB = "Joshua Bloch";
 
-    private Book bookTest;
+    private static final String BOOK_TEST_NAME_IN_DB = "Java Efetivo";
 
     @Test
     public void findAll_ReturnListOfAuthors_WhenSuccessful() {
         ResponseEntity<List<AuthorDTO>> exchange = testRestTemplate.
                 exchange("/api/v1/authors", HttpMethod.GET, null,
-                         new ParameterizedTypeReference<List<AuthorDTO>>() {
+                         new ParameterizedTypeReference<>() {
                          });
 
         List<AuthorDTO> authors = exchange.getBody();
 
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(authors).isNotNull().isNotEmpty().hasSize(1);
+        assertThat(authors.get(0).getName()).isEqualTo(AUTHOR_TEST_NAME_IN_DB);
     }
 
     @Test
     public void findByName_ReturnAuthorByName_WhenSuccessful() {
-        String authorName = "Joshua Bloch";
-
         ResponseEntity<AuthorDTO> exchange = testRestTemplate
                 .exchange("/api/v1/authors/{name}", HttpMethod.GET, null,
-                          new ParameterizedTypeReference<AuthorDTO>() {
-                          }, authorName);
+                          new ParameterizedTypeReference<>() {
+                          }, AUTHOR_TEST_NAME_IN_DB);
 
         AuthorDTO author = exchange.getBody();
 
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(author).isNotNull();
+        assertThat(author.getName()).isEqualTo(AUTHOR_TEST_NAME_IN_DB);
     }
 
     @Test
-    public void findByName_Return404NotFound_WhenAuthorIsNotFound() {
+    public void findByName_Return404NotFound_WhenAuthorIsNotFoundByName() {
         ResponseEntity<AuthorDTO> entityMessage = testRestTemplate
                 .exchange("/api/v1/authors/{name}", HttpMethod.GET, null,
-                          new ParameterizedTypeReference<AuthorDTO>() {
+                          new ParameterizedTypeReference<>() {
                           }, "");
 
         assertThat(entityMessage).isNotNull();
@@ -75,17 +73,16 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
 
     @Test
     public void findAllBooksByAuthor_ReturnListOfBooksByAuthor_WhenSuccessful() {
-        String authorTestName = "Joshua Bloch";
-
         ResponseEntity<List<BookDTO>> exchange = testRestTemplate.
                 exchange("/api/v1/authors/{author}/books", HttpMethod.GET, null,
-                                                                           new ParameterizedTypeReference<List<BookDTO>>() {
+                         new ParameterizedTypeReference<>() {
 
-                                                                           }, authorTestName);
+                         }, AUTHOR_TEST_NAME_IN_DB);
         List<BookDTO> books = exchange.getBody();
 
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(books).isNotNull().isEmpty();
+        assertThat(books).isNotNull().isNotEmpty();
+        assertThat(books.get(0).getTitle()).isEqualTo(BOOK_TEST_NAME_IN_DB);
     }
 
     @Test
@@ -99,6 +96,7 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
 
         assertThat(authorResponseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(authorSaved).isNotNull();
+        assertThat(authorSaved.getName()).isEqualTo(authorRequest.getName());
     }
 
     @Test
@@ -120,13 +118,25 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
 
         ResponseEntity<AuthorDTO> exchange = testRestTemplate
                 .exchange("/api/v1/authors/{id}", HttpMethod.PUT,
-                          new HttpEntity<>(authorRequest), AuthorDTO.class, 1);
+                          new HttpEntity<>(authorRequest), AuthorDTO.class, id);
 
         AuthorDTO authorDTO = exchange.getBody();
 
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(authorDTO).isNotNull();
         assertThat(authorDTO.getName()).isEqualTo(authorRequest.getName());
+    }
+
+    @Test
+    public void updateAuthor_Return404NotFound_WhenAuthorIsNotFoundById(){
+        AuthorPostRequestBody authorRequest = generateAuthorRequestBody();
+        long id = 5;
+
+        ResponseEntity<AuthorDTO> exchange = testRestTemplate
+                .exchange("/api/v1/authors/{id}", HttpMethod.PUT,
+                          new HttpEntity<>(authorRequest), AuthorDTO.class, id);
+
+        assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
     @Test

@@ -109,7 +109,7 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
     }
 
     @Test
-    public void updateAuthor_ShouldUpdateAndReturnAuthorUpdatedAuthor_WhenSuccessful(){
+    public void updateAuthor_ShouldUpdateAndReturnUpdatedAuthor_WhenSuccessful(){
         AuthorPostRequestBody authorRequest = generateAuthorRequestBody();
         authorRequest.setName(AUTHOR_TEST_NAME_IN_DB);
         long id = 1;
@@ -139,7 +139,10 @@ public class AuthorControllerIT extends AbstractPostgresTestContainer {
 
     @Test
     public void deleteAuthor_ShouldDeleteAuthorAndReturnVoid_WhenSuccessful() {
-        long id = 1;
+        testRestTemplate
+                .postForEntity("/api/v1/authors", generateAuthorRequestBody(), AuthorDTO.class);
+
+        long id = 2;
 
         ResponseEntity<Void> exchange = testRestTemplate.
                 exchange("/api/v1/authors/{id}", HttpMethod.DELETE, null, Void.class, id);

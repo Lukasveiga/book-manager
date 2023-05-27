@@ -139,7 +139,10 @@ public class CategoryControllerIT  extends AbstractPostgresTestContainer {
 
     @Test
     public void deleteCategory_ShouldDeleteCategoryAndReturnVoid_WhenSuccessful() {
-        long id = 1;
+        testRestTemplate
+                .postForEntity("/api/v1/categories", generateCategoryDTO(), CategoryDTO.class);
+
+        long id = 2;
 
         ResponseEntity<Void> exchange = testRestTemplate.
                 exchange("/api/v1/categories/{id}", HttpMethod.DELETE, null, Void.class, id);

@@ -20,6 +20,10 @@ spring:
         format_sql: true
         ddl-auto: none
 
+  #Flyway
+  flyway:
+    enabled: false
+
       # Export sql script generate by hibernate
       #jakarta:
       #  persistence:
@@ -30,8 +34,6 @@ spring:
       #        create-target: schema.sql
       #  hbm2ddl:
       #    delimiter: ;
-
-
 
 logging:
   level:

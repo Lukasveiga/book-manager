@@ -18,6 +18,20 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        ddl-auto: none
+
+      # Export sql script generate by hibernate
+      #jakarta:
+      #  persistence:
+      #    schema-generation:
+      #      create-source: metadata
+      #      scripts:
+      #        action: create
+      #        create-target: schema.sql
+      #  hbm2ddl:
+      #    delimiter: ;
+
+
 
 logging:
   level:

@@ -8,11 +8,19 @@ spring:
   # JPA properties
   jpa:
     hibernate:
-      ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+      ddl-auto: validate # When you launch the application for the first time - switch "none" at "create" validate
+    showSql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
 
 logging:
   level:
     root: WARN
+
+  #flyway
+  flyway:
+    enable: true
+    baselineOnMigrate: true
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+

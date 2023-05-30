@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record ExceptionDetails(
+public record ExceptionDetailsBody(
         String path,
         String message,
         int statusCode,

@@ -3,7 +3,7 @@ package com.javadev.bookmanager.handler;
 import com.javadev.bookmanager.exceptions.AuthorNotFoundException;
 import com.javadev.bookmanager.exceptions.BookNotFoundException;
 import com.javadev.bookmanager.exceptions.CategoryNotFoundException;
-import com.javadev.bookmanager.exceptions.ExceptionDetails;
+import com.javadev.bookmanager.exceptions.ExceptionDetailsBody;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 public class ExceptionHandlerSource extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AuthorNotFoundException.class)
-    public ResponseEntity<ExceptionDetails> authorNotFound(AuthorNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ExceptionDetailsBody> authorNotFound(AuthorNotFoundException ex, HttpServletRequest request) {
 
         return new ResponseEntity<>(
-                ExceptionDetails
+                ExceptionDetailsBody
                         .builder()
                         .path(request.getRequestURI())
                         .message(ex.getMessage())
@@ -38,10 +38,10 @@ public class ExceptionHandlerSource extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BookNotFoundException.class)
-    public ResponseEntity<ExceptionDetails> bookNotFound(BookNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ExceptionDetailsBody> bookNotFound(BookNotFoundException ex, HttpServletRequest request) {
 
         return new ResponseEntity<>(
-                ExceptionDetails
+                ExceptionDetailsBody
                         .builder()
                         .path(request.getRequestURI())
                         .message(ex.getMessage())
@@ -51,10 +51,10 @@ public class ExceptionHandlerSource extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<ExceptionDetails> CategoryNotFound(CategoryNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ExceptionDetailsBody> CategoryNotFound(CategoryNotFoundException ex, HttpServletRequest request) {
 
         return new ResponseEntity<>(
-                ExceptionDetails
+                ExceptionDetailsBody
                         .builder()
                         .path(request.getRequestURI())
                         .message(ex.getMessage())
@@ -71,7 +71,7 @@ public class ExceptionHandlerSource extends ResponseEntityExceptionHandler {
         List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         String fieldsMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
 
-        return new ResponseEntity<>(ExceptionDetails
+        return new ResponseEntity<>(ExceptionDetailsBody
                                             .builder()
                                             .path(((ServletWebRequest)request).getRequest().getRequestURI())
                                             .message(fieldsMessage)

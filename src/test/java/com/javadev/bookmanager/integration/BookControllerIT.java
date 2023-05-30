@@ -39,6 +39,7 @@ public class BookControllerIT extends AbstractPostgresTestContainer {
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(books).isNotNull().isNotEmpty().hasSize(1);
         assertThat(books.get(0).getTitle()).isEqualTo(BOOK_TEST_NAME_IN_DB);
+        assertThat(books.get(0).isAvailable()).isTrue();
     }
 
     @Test
@@ -56,7 +57,7 @@ public class BookControllerIT extends AbstractPostgresTestContainer {
     }
 
     @Test
-    public void findByName_Return404NotFound_WhenBookIsNotFoundByName() {
+    public void findByTitle_Return404NotFound_WhenBookIsNotFoundByName() {
         ResponseEntity<BookDTO> exchange = testRestTemplate
                 .exchange("/api/v1/books/{title}", HttpMethod.GET, null,
                           new ParameterizedTypeReference<>() {
@@ -131,8 +132,15 @@ public class BookControllerIT extends AbstractPostgresTestContainer {
         ResponseEntity<Void> exchange = testRestTemplate.
                 exchange("/api/v1/books/{id}", HttpMethod.DELETE, null, Void.class, id);
 
+        BookDTO exchangeGet = testRestTemplate
+                .exchange("/api/v1/books/{title}", HttpMethod.GET, null,
+                          new ParameterizedTypeReference<BookDTO>() {
+                          }, generateBookRequestBody().getTitle()).getBody();
+
         assertThat(exchange).isNotNull();
         assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(exchangeGet).isNotNull();
+        assertThat(exchangeGet.isAvailable()).isFalse();
     }
 
     @Test

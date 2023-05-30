@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 @DataJpaTest
 class BookRepositoryTest {
 
@@ -31,7 +33,7 @@ class BookRepositoryTest {
     }
 
     @Test
-    void findByTitleIgnoreCase_returnBookByName_WhenSuccessful(){
+    void findByTitleIgnoreCase_ReturnBookByName_WhenSuccessful(){
         Book bookTest = repository.findByTitleIgnoreCase(book.getTitle()).orElse(new Book());
         Assertions
                 .assertThat(bookTest)
@@ -48,6 +50,15 @@ class BookRepositoryTest {
                             .findByTitleIgnoreCase(bookNameTest)
                             .orElseThrow(() -> new BookNotFoundException(""));
                 });
+    }
+
+    @Test
+    void findByIsAvailableTrue_ReturnListOfAvailableBooks_WhenSuccessful(){
+        List<Book> byIsAvailableTrue = repository.findByIsAvailableTrue();
+
+        Assertions.assertThat(byIsAvailableTrue).isNotEmpty();
+        Assertions.assertThat(byIsAvailableTrue.get(0).isAvailable()).isTrue();
+
     }
 
 }

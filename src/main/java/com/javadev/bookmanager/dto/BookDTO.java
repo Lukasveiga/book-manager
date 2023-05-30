@@ -27,6 +27,8 @@ public class BookDTO {
 
     private String image;
 
+    private boolean isAvailable;
+
     private Set<String> authors = new HashSet<>();
 
     private Set<String> categories = new HashSet<>();
@@ -37,6 +39,7 @@ public class BookDTO {
         this.pages = book.getPages();
         this.language = book.getLanguage();
         this.image = book.getImage();
+        this.isAvailable = book.isAvailable();
         this.authors.addAll(book.getAuthors()
                                     .stream()
                                     .map(Author::getName).toList());

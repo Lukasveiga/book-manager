@@ -30,7 +30,7 @@ public class BookServiceImp implements BookService{
     @Override
     public List<BookDTO> listAll() {
 
-        return repository.findAll().stream().map(BookDTO::new).toList();
+        return repository.findByIsAvailableTrue().stream().map(BookDTO::new).toList();
     }
 
     @Override
@@ -102,7 +102,8 @@ public class BookServiceImp implements BookService{
     public void delete(long id) {
         Book book = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("The book with id {" + id + "} wasn't found."));
-        repository.delete(book);
+        book.setAvailable(false);
+        repository.save(book);
     }
 
 }

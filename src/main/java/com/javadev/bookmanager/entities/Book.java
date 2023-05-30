@@ -36,7 +36,8 @@ public class Book {
     @Column(name = "image")
     private String image;
 
-    // private boolean isAvailable;
+    @Column(name = "is_available")
+    private boolean isAvailable;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -60,6 +61,7 @@ public class Book {
         this.pages = pages;
         this.language = language;
         this.image = image;
+        this.isAvailable = true;
     }
 
     public void addAuthor(Author author) {

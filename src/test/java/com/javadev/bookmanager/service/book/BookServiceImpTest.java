@@ -50,7 +50,7 @@ class BookServiceImpTest {
 
     @Test
     void listAll_ReturnListOfBooks_WhenSuccessful() {
-        when(repository.findAll())
+        when(repository.findByIsAvailableTrue())
                 .thenReturn(List.of(bookTest));
 
         List<BookDTO> bookDTOS = service.listAll();
@@ -139,8 +139,6 @@ class BookServiceImpTest {
     void delete_ReturnVoid_WhenSuccessful() {
         when(repository.findById(anyLong()))
                 .thenReturn(Optional.ofNullable(bookTest));
-
-        doNothing().when(repository).delete(any(Book.class));
 
         assertThatCode(() -> service.delete(1))
                 .doesNotThrowAnyException();

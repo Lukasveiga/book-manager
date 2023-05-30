@@ -36,6 +36,8 @@ public class Book {
     @Column(name = "image")
     private String image;
 
+    // private boolean isAvailable;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "book_author",
@@ -50,11 +52,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "id_category"))
     private Set<Category> categories = new HashSet<>();
 
-    // private List<Category> categories;
-
     // private double price;
-
-    // private boolean isAvailable;
 
     public Book(String name, int year, int pages, String language, String image) {
         this.title = name;

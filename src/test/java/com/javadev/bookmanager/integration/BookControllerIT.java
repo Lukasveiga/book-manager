@@ -6,14 +6,12 @@ import com.javadev.bookmanager.repository.BookRepository;
 import com.javadev.bookmanager.request.BookPostRequestBody;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
@@ -21,9 +19,7 @@ import static com.javadev.bookmanager.util.EntitiesInformationDatabaseTest.*;
 import static com.javadev.bookmanager.util.GenerateBookAuthorCategory.generateBookRequestBody;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BookControllerIT {
+public class BookControllerIT extends AbstractPostgresTestContainer {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
